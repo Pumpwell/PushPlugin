@@ -199,10 +199,6 @@
 - (void)notificationReceived {
     NSLog(@"Notification received");
 
-    if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1) {
-        // here you go with iOS 7
-    }
-
     if (notificationMessage && self.callback)
     {
         NSMutableString *jsonStr = [NSMutableString stringWithString:@"{"];
