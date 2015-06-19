@@ -49,9 +49,7 @@
 
     NSMutableDictionary* options = [command.arguments objectAtIndex:0];
 
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000
-		UIUserNotificationType UserNotificationTypes = UIUserNotificationTypeNone;
-#endif
+    UIUserNotificationType UserNotificationTypes = UIUserNotificationTypeNone;
     UIRemoteNotificationType notificationTypes = UIRemoteNotificationTypeNone;
 
     id badgeArg = [options objectForKey:@"badge"];
@@ -62,54 +60,40 @@
     {
         if ([badgeArg isEqualToString:@"true"]) {
             notificationTypes |= UIRemoteNotificationTypeBadge;
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000
             UserNotificationTypes |= UIUserNotificationTypeBadge;
-#endif
         }
     }
     else if ([badgeArg boolValue]) {
         notificationTypes |= UIRemoteNotificationTypeBadge;
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000
         UserNotificationTypes |= UIUserNotificationTypeBadge;
-#endif
     }
 
     if ([soundArg isKindOfClass:[NSString class]])
     {
         if ([soundArg isEqualToString:@"true"]) {
             notificationTypes |= UIRemoteNotificationTypeSound;
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000
             UserNotificationTypes |= UIUserNotificationTypeSound;
-#endif
     }
     }
     else if ([soundArg boolValue]) {
         notificationTypes |= UIRemoteNotificationTypeSound;
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000
         UserNotificationTypes |= UIUserNotificationTypeSound;
-#endif
     }
 
     if ([alertArg isKindOfClass:[NSString class]])
     {
         if ([alertArg isEqualToString:@"true"]) {
             notificationTypes |= UIRemoteNotificationTypeAlert;
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000
             UserNotificationTypes |= UIUserNotificationTypeAlert;
-#endif
     }
     }
     else if ([alertArg boolValue]) {
         notificationTypes |= UIRemoteNotificationTypeAlert;
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000
         UserNotificationTypes |= UIUserNotificationTypeAlert;
-#endif
     }
 
     notificationTypes |= UIRemoteNotificationTypeNewsstandContentAvailability;
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000
     UserNotificationTypes |= UIUserNotificationActivationModeBackground;
-#endif
 
     self.callback = [options objectForKey:@"ecb"];
 
@@ -118,7 +102,6 @@
 
     isInline = NO;
 
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000
     if ([[UIApplication sharedApplication]respondsToSelector:@selector(registerUserNotificationSettings:)]) {
         UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UserNotificationTypes categories:nil];
         [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
@@ -126,9 +109,6 @@
     } else {
     		[[UIApplication sharedApplication] registerForRemoteNotificationTypes:notificationTypes];
     }
-#else
-		[[UIApplication sharedApplication] registerForRemoteNotificationTypes:notificationTypes];
-#endif
 
 	if (notificationMessage)			// if there is a pending startup notification
 		[self notificationReceived];	// go ahead and process it
